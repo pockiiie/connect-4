@@ -1,6 +1,6 @@
-# TIC TAC TOE
+# CONNECT-4
 
-Typical tic-tac-toe. 2 players required. Board size 3x3 ... 10x10
+Connect 4 game
 
 This app is create by Next.js 
 ## Getting Started
