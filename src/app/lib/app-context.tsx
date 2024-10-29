@@ -6,7 +6,7 @@ export type TileType = number[][]
 export const initTiles = [
   [0, 0, 0],
   [0, 0, 0],
-  [0, 0, 0]
+  [0, 0, 0] 
 ]
 
 // createContext parameters must be the same as useState variable and function to set in Provider
