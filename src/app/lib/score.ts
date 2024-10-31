@@ -218,20 +218,6 @@ export function findConsecutiveSequences(grid: Grid): { found: boolean; sequence
   return { found, sequences };
 }
 
-// Example usage:
-// const result = findConsecutiveSequences(grid);
-// if (result.found) {
-//     console.log("Found sequences (with intersections removed):");
-//     result.sequences.forEach(sequence => {
-//         console.log(`\nValue: ${sequence.value}`);
-//         console.log(`Direction: ${sequence.direction}`);
-//         console.log(`Length: ${sequence.length}`);
-//         console.log("Positions:", sequence.positions);
-//     });
-// } else {
-//     console.log("No sequences of 4 or more consecutive numbers found.");
-// }
-
 export type PlayerScore = {
   player: number
   score: number
