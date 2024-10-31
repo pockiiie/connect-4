@@ -1,20 +1,28 @@
 # CONNECT-4
 
 Connect 4 game
-
 This app is create by Next.js 
+
+With some helps form Claude AI
+
+## Requirements
+**node.js** must be installed
+
+**pnpm** is recommened
+
+
 ## Getting Started
 
-First, run the development server:
+Install dependencies
 
+```bash
+npm install
+```
+Start dev server
 ```bash
 npm run dev
 # or
-yarn dev
-# or
 pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser and enjoy
