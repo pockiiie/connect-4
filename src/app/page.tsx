@@ -2,7 +2,7 @@
 
 import Board from "@/app/ui/board"
 import { BaseSyntheticEvent, useEffect, useState } from "react"
-import { AppContext, initTiles } from "./lib/app-context"
+import { AppContext, initTiles, Tiles } from "./lib/app-context"
 import { displayPlayer } from "./lib/player-display"
 import { findConsecutiveSequences, grid } from "./lib/score"
 
@@ -14,6 +14,7 @@ export default function Home() {
   const [winner, setWinner] = useState(0)
   const [isDraw, setIsDraw] = useState(false)
   const [size, setSize] = useState(6)
+  const [coords, setCoords] = useState([])
 
   const boardSize = [6, 7, 8, 9, 10]
 
@@ -42,6 +43,7 @@ export default function Home() {
     setIsGameOver(false)
     setIsDraw(false)
     createTiles(size)
+    setCoords([])
   }
 
   // Size select change
@@ -91,21 +93,38 @@ export default function Home() {
             nextTurn, setNextTurn,
             winner, setWinner,
             isDraw, setIsDraw,
-            size, setSize
+            size, setSize,
+            coords, setCoords,
           }}>
             <Board />
           </AppContext.Provider>
         </div>
         <div className="w-full text-[6vh] text-center">
-          <span className={`${(winner === 0 && !isDraw) ? 'block' : 'hidden'}`}>
-            Player {displayPlayer(nextTurn)}
-          </span>
-          <span className={`${(winner !== 0 && !isDraw) ? 'block' : 'hidden'}`}>
-            Winner is {displayPlayer(winner)}
-          </span>
-          <span className={`${isDraw ? 'block' : 'hidden'}`}>
+          <div className={`${(winner === 0 && !isDraw) ? 'flex justify-center items-center' : 'hidden'}`}>
+            <div>
+              Player
+            </div>
+            <div className="ml-2">
+              <div className={`
+              h-12 w-12 rounded-[4rem] flex justify-center items-center 
+              ${nextTurn === 1 && displayPlayer(nextTurn).bg}
+              ${nextTurn === 2 && displayPlayer(nextTurn).bg}
+              `}>
+                <div className={`
+                h-10 w-10 rounded-[3rem] 
+                ${nextTurn === 1 && displayPlayer(nextTurn).innerBg}
+                ${nextTurn === 2 && displayPlayer(nextTurn).innerBg}
+                `}>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={`${(winner !== 0 && !isDraw) ? 'block' : 'hidden'}`}>
+            Winner is
+          </div>
+          <div className={`${isDraw ? 'block' : 'hidden'}`}>
             TIE is a LAME!
-          </span>
+          </div>
         </div>
       </main>
     </div>

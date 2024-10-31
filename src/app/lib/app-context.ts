@@ -1,7 +1,16 @@
 import { createContext, useContext } from "react";
 
 // Define type for setFunction of useState
-export type TileType = number[][]
+export type Tiles = number[][]
+
+export const initTiles = [
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 0, 0],
+]
 
 // export const initTiles = [
 //   [0, 0, 0, 0, 0, 0, 0, 0],
@@ -14,16 +23,17 @@ export type TileType = number[][]
 //   [0, 0, 0, 0, 0, 0, 0, 0],
 // ]
 
-export const initTiles = [
-  [2, 1, 1, 1, 1, 1, 2, 1],
-  [1, 2, 2, 1, 2, 2, 1, 1],
-  [1, 1, 2, 1, 2, 1, 1, 1],
-  [1, 1, 2, 2, 1, 1, 1, 1],
-  [1, 1, 2, 1, 2, 1, 1, 1],
-  [1, 2, 2, 1, 2, 2, 1, 1],
-  [2, 1, 2, 1, 2, 1, 2, 1],
-  [2, 2, 2, 2, 1, 1, 1, 0],
-]
+
+// export const initTiles = [
+//   [2, 1, 1, 1, 1, 1, 2, 1],
+//   [1, 2, 2, 1, 2, 2, 1, 1],
+//   [1, 1, 2, 1, 2, 1, 1, 1],
+//   [1, 1, 2, 2, 1, 1, 1, 1],
+//   [1, 1, 2, 1, 2, 1, 1, 1],
+//   [1, 2, 2, 1, 2, 2, 1, 1],
+//   [2, 1, 2, 1, 2, 1, 2, 1],
+//   [2, 2, 2, 2, 1, 1, 1, 0],
+// ]
 
 // export const initTiles = [
 //   [2, 1, 1, 1, 1, 1, 2, 1],
@@ -52,10 +62,29 @@ export const initTiles = [
 //   [[4, 7], [5, 6], [6, 5], [7, 4]] // 1 blue diagonal left
 // ]
 
+type appContext = {
+  tiles: Tiles
+  setTiles: Function
+  isGameOver: boolean
+  setIsGameOver: Function
+  turn: number
+  setTurn: Function
+  nextTurn: number
+  setNextTurn: Function
+  winner: number
+  setWinner: Function
+  isDraw: boolean
+  setIsDraw: Function
+  size: number
+  setSize: Function
+  coords:string[]
+  setCoords: Function
+}
+
 // createContext parameters must be the same as useState variable and function to set in Provider
-export const AppContext = createContext({
+export const AppContext = createContext<appContext>({
   tiles: initTiles,
-  setTiles: (_: TileType) => { }, //mimic useState setFunction
+  setTiles: (_: Tiles) => { }, //mimic useState setFunction
   isGameOver: false,
   setIsGameOver: (_: boolean) => { },
   turn: 0,
@@ -67,7 +96,9 @@ export const AppContext = createContext({
   isDraw: false,
   setIsDraw: (_: boolean) => { },
   size: 3,
-  setSize: (_: number) => { }
+  setSize: (_: number) => { },
+  coords:[],
+  setCoords: (_: string[]) => { }
 })
 
 export const useAppContext = () => useContext(AppContext)

@@ -1,5 +1,3 @@
-import { TileType } from "./app-context";
-
 // This for testing
 export const grid = [
   [2, 1, 1, 1, 1, 1, 2, 1],
@@ -50,7 +48,7 @@ interface Position {
   col: number;
 }
 
-interface Sequence {
+export interface Sequence {
   value: number;
   positions: Position[];
   coordinates: string[];
@@ -234,11 +232,3 @@ export function findConsecutiveSequences(grid: Grid): { found: boolean; sequence
 //     console.log("No sequences of 4 or more consecutive numbers found.");
 // }
 
-export function fetchAllConnected(sequences: Sequence[]) {
-  return sequences.map(sequence => sequence.coordinates.map)
-}
-
-export function isInConnected(position: number[], allConnected: number[]): boolean {
-return false
-
-}
