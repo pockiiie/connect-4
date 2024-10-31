@@ -13,6 +13,7 @@ export default function Board() {
     setIsGameOver,
     turn,
     setTurn,
+    nextTurn,
     setNextTurn,
     winner,
     setWinner,
@@ -131,14 +132,12 @@ export default function Board() {
                   ${size === 8 && 'h-[4.8vh] md:h-[8.2vh] border-[0.8vh]'}
                   ${size === 9 && 'h-[4.2vh] md:h-[7vh] border-[0.6vh]'}
                   ${size === 10 && 'h-[3.8vh] md:h-[6.4vh]'}
-                  ${own === 0 && 'bg-gray-800 hover:border-slate-200'}
-                  ${own === 1 && 'bg-blue-800'}
-                  ${own === 2 && 'bg-red-800'}
-                  ${own === 1 && 'border-blue-600'}
-                  ${own === 2 && 'border-red-600'}
+                  ${own === 0 && 'bg-gray-900 hover:border-slate-200'}
+                  ${own === 1 && 'bg-blue-900 border-blue-600'}
+                  ${own === 2 && 'bg-red-900 border-red-600'}
+                  ${nextTurn === 1 && own === 0 && 'hover:bg-blue-900 hover:blur-sm'}
+                  ${nextTurn === 2 && own === 0 && 'hover:bg-red-900 hover:blur-sm'}
                   ${isGameOver && !isInCoords(position) && 'blur-sm contrast-50'}
-
-                  
                 `}
                 onClick={handleTileClick}
               >
@@ -154,18 +153,8 @@ export default function Board() {
                   ${own === 1 && 'bg-blue-500'}
                   ${own === 2 && 'bg-red-500'}
                 `}>
-                  <div className={`
-                    text-8xl md:text-[20vh] w-full text-center
-                    invisible
-                    ${size === 6 && 'md:text-[8vh]'}
-                    ${size === 7 && 'md:text-[7vh]'}
-                    ${size === 8 && 'md:text-[6vh]'}
-                    ${size === 9 && 'md:text-[5vh]'}
-                    ${size === 10 && 'md:text-[4vh]'}
-                  `}>
-                    <span>
-                      {displayPlayer(own).own}
-                    </span>
+                  <div className={`invisible`}>
+                    {displayPlayer(own).own}
                   </div>
                 </div>
               </div>
@@ -173,6 +162,6 @@ export default function Board() {
           })
         })
       }
-    </div>
+    </div >
   )
 }

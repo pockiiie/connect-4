@@ -2,14 +2,12 @@
 
 import Board from "@/app/ui/board"
 import Circle from "@/app/ui/circle"
-
 import { BaseSyntheticEvent, useEffect, useState } from "react"
 import { AppContext, initTiles, Tiles } from "./lib/app-context"
-import { displayPlayer } from "./lib/player-display"
 
 export default function Home() {
   const initScores = [{ player: 1, score: 0, scores: [] }, { player: 2, score: 0, scores: [] }]
-  const [tiles, setTiles] = useState(Array.from(initTiles))
+  const [tiles, setTiles] = useState<Tiles>(initTiles)
   const [isGameOver, setIsGameOver] = useState(false)
   const [turn, setTurn] = useState(1)
   const [nextTurn, setNextTurn] = useState(1)
@@ -29,7 +27,6 @@ export default function Home() {
     const rows = new Array(size)
     const newTiles = Array.from(rows, () => new Array(size).fill(0))
     setTiles(newTiles);
-    return newTiles
   }
 
   // NEW GAME
@@ -98,12 +95,12 @@ export default function Home() {
               New Game
             </button>
           </div>
-          <div className="w-full">
+          <div className="w-full overflow-hidden">
             <Board />
           </div>
           <div className="w-full flex justify-between">
-            <Circle baseClass="h-10 w-10 rounded-[4rem]" innerClass="h-6 w-6 rounded-[3rem]" player={1} showScore/>
-            <Circle baseClass="h-10 w-10 rounded-[4rem]" innerClass="h-6 w-6 rounded-[3rem]" player={2} showScore/>
+            <Circle baseClass="h-10 w-10 rounded-[4rem]" innerClass="h-6 w-6 rounded-[3rem]" player={1} showScore />
+            <Circle baseClass="h-10 w-10 rounded-[4rem]" innerClass="h-6 w-6 rounded-[3rem]" player={2} showScore />
           </div>
           <div className="w-full text-[6vh] text-center">
 
