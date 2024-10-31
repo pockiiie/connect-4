@@ -232,3 +232,31 @@ export function findConsecutiveSequences(grid: Grid): { found: boolean; sequence
 //     console.log("No sequences of 4 or more consecutive numbers found.");
 // }
 
+export type PlayerScore = {
+  player: number
+  score: number
+  scores: string[][]
+}
+
+export function getScore(playerNumber: number, sequences: Sequence[]): PlayerScore {
+  const playerSequences = sequences.filter((sqn: Sequence) => sqn.value === playerNumber)
+
+  const scores: string[][] = []
+  playerSequences.forEach((sqn: Sequence) => {
+    const { coordinates } = sqn
+    if (coordinates.length >= 8) {
+      let slice = coordinates.slice(0, 3)
+      scores.push(slice)
+      slice = coordinates.slice(3, coordinates.length - 1)
+      scores.push(slice)
+    } else {
+      scores.push(coordinates)
+    }
+  })
+
+  return {
+    player: playerNumber,
+    score: scores.length,
+    scores: scores,
+  }
+}

@@ -2,7 +2,7 @@
 
 import { BaseSyntheticEvent, useState, useEffect } from "react"
 import { useAppContext, Tiles, initTiles } from "../lib/app-context"
-import { findConsecutiveSequences, Sequence } from "../lib/score"
+import { findConsecutiveSequences, getScore, Sequence } from "../lib/score"
 import { displayPlayer } from "../lib/player-display"
 
 export default function Board() {
@@ -14,24 +14,39 @@ export default function Board() {
     turn,
     setTurn,
     setNextTurn,
+    winner,
     setWinner,
     setIsDraw,
     size,
     coords,
-    setCoords
+    setCoords,
+    setPlayerScores
   } = useAppContext()
 
   // const [tiles, setTiles] = useState(initTiles)
   useEffect(() => {
-    if(isBoardFull()) {
-      setIsGameOver(true)
-    }
-    
     const result = findConsecutiveSequences(tiles)
     if (result.sequences.length) {
       let coordinates: any = result.sequences.map(sequence => sequence.coordinates)
       coordinates = coordinates.flat()
       setCoords(coordinates)
+    }
+
+    const p1 = getScore(1, result.sequences)
+    const p2 = getScore(2, result.sequences)
+
+    setPlayerScores([p1, p2])
+
+    if (isBoardFull()) {
+      setIsGameOver(true)
+      if (p1.score > p2.score) {
+        setWinner(1)
+      } else if (p1.score < p2.score) {
+        setWinner(2)
+      } else {
+        setWinner(0)
+        setIsDraw(true)
+      }
     }
 
   }, [tiles])
@@ -83,11 +98,6 @@ export default function Board() {
     updateTilesValue(x, y, nextTurn)
     setTurn(nextTurn)
     setNextTurn((nextTurn === 1) ? 2 : 1)
-
-    // const result = findWinner()
-    // if (result.isWin) {
-    //   setWinner(result.player)
-    // }
   }
 
 
@@ -103,7 +113,6 @@ export default function Board() {
         ${size === 8 && 'grid-cols-8 md:gap-[0.4vh] md:p-[0.4vh]'}
         ${size === 9 && 'grid-cols-9 md:gap-[0.5vh] md:p-[0.5vh]'}
         ${size === 10 && 'grid-cols-10 md:gap-[0.5vh] md:p-[0.5vh]'}
-        ${isGameOver && 'opacity-60'}
       `}>
       {
         tiles.map((row, ri) => {
@@ -114,7 +123,7 @@ export default function Board() {
               <div key={`${ri}-${ci}`}
                 className={`tile
                   bg-gray-800 w-auto rounded-[3.5rem] flex justify-center items-center overflow-clip
-                  p-1 hover:border-slate-200
+                  p-1 
                   border-4 border-slate-600
                   transition-colors duration-300
                   ${size === 6 && 'h-[6.4vh] md:h-[11vh] border-[1.2vh]'}
@@ -122,11 +131,12 @@ export default function Board() {
                   ${size === 8 && 'h-[4.8vh] md:h-[8.2vh] border-[0.8vh]'}
                   ${size === 9 && 'h-[4.2vh] md:h-[7vh] border-[0.6vh]'}
                   ${size === 10 && 'h-[3.8vh] md:h-[6.4vh]'}
-                  ${own === 0 && 'bg-gray-800'}
+                  ${own === 0 && 'bg-gray-800 hover:border-slate-200'}
                   ${own === 1 && 'bg-blue-800'}
                   ${own === 2 && 'bg-red-800'}
-                  ${isInCoords(position) && own === 1 &&  'border-blue-600 mix-blend-multiply'}
-                  ${isInCoords(position) && own === 2 &&  'border-red-600 mix-blend-multiply'}
+                  ${own === 1 && 'border-blue-600'}
+                  ${own === 2 && 'border-red-600'}
+                  ${isGameOver && !isInCoords(position) && 'blur-sm contrast-50'}
 
                   
                 `}

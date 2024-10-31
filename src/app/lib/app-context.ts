@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+import { PlayerScore } from "./score";
 
 // Define type for setFunction of useState
 export type Tiles = number[][]
@@ -79,6 +80,8 @@ type appContext = {
   setSize: Function
   coords:string[]
   setCoords: Function
+  playerScores: PlayerScore[]
+  setPlayerScores: Function
 }
 
 // createContext parameters must be the same as useState variable and function to set in Provider
@@ -98,7 +101,9 @@ export const AppContext = createContext<appContext>({
   size: 3,
   setSize: (_: number) => { },
   coords:[],
-  setCoords: (_: string[]) => { }
+  setCoords: (_: string[]) => { },
+  playerScores: [],
+  setPlayerScores: () => {},
 })
 
 export const useAppContext = () => useContext(AppContext)
