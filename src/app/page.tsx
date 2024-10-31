@@ -4,17 +4,18 @@ import Board from "@/app/ui/board"
 import { BaseSyntheticEvent, useEffect, useState } from "react"
 import { AppContext, initTiles } from "./lib/app-context"
 import { displayPlayer } from "./lib/player-display"
+import { findConsecutiveSequences, grid } from "./lib/score"
 
 export default function Home() {
   const [tiles, setTiles] = useState(Array.from(initTiles))
-  const [isEnd, setIsEnd] = useState(false)
+  const [isGameOver, setIsGameOver] = useState(false)
   const [turn, setTurn] = useState(1)
   const [nextTurn, setNextTurn] = useState(1)
   const [winner, setWinner] = useState(0)
   const [isDraw, setIsDraw] = useState(false)
-  const [size, setSize] = useState(3)
+  const [size, setSize] = useState(6)
 
-  const boardSize = [3, 4, 5, 6, 7, 8, 9, 10]
+  const boardSize = [6, 7, 8, 9, 10]
 
   useEffect(() => {
     createTiles(size);
@@ -38,7 +39,7 @@ export default function Home() {
       setTurn(2)
     }
     setWinner(0)
-    setIsEnd(false)
+    setIsGameOver(false)
     setIsDraw(false)
     createTiles(size)
   }
@@ -85,7 +86,7 @@ export default function Home() {
         you can use it in any child component via react.useContext function */}
           <AppContext.Provider value={{
             tiles, setTiles,
-            isEnd, setIsEnd,
+            isGameOver, setIsGameOver,
             turn, setTurn,
             nextTurn, setNextTurn,
             winner, setWinner,
