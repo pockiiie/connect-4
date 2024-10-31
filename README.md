@@ -17,6 +17,8 @@ Install dependencies
 
 ```bash
 npm install
+# or
+pnpm install
 ```
 Start dev server
 ```bash
